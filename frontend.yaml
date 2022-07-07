@@ -6,7 +6,7 @@ metadata:
     release: v1
   name: frontend-v1
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: frontend
