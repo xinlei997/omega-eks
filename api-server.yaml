@@ -51,7 +51,7 @@ spec:
               path: /
               port: 80
             initialDelaySeconds: 3
-            periodSeconds: 15
+            periodSeconds: 30
             successThreshold: 1
             failureThreshold: 1
           readinessProbe:
@@ -68,7 +68,7 @@ spec:
               path: /
               port: 80
             initialDelaySeconds: 0
-            periodSeconds: 30
+            periodSeconds: 60
             successThreshold: 1
             failureThreshold: 2
           env:
