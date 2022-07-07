@@ -51,7 +51,7 @@ spec:
               path: /
               port: 80
             initialDelaySeconds: 3
-            periodSeconds: 5
+            periodSeconds: 15
             successThreshold: 1
             failureThreshold: 1
           readinessProbe:
@@ -60,7 +60,7 @@ spec:
               port: 80
               httpHeaders:
             initialDelaySeconds: 0
-            periodSeconds: 2
+            periodSeconds: 5
             successThreshold: 1
             failureThreshold: 1
           startupProbe:
@@ -68,7 +68,7 @@ spec:
               path: /
               port: 80
             initialDelaySeconds: 0
-            periodSeconds: 15
+            periodSeconds: 30
             successThreshold: 1
             failureThreshold: 2
           env:
