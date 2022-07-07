@@ -51,7 +51,10 @@ spec:
                   name: db
                   key: password
             - name: spring.application.name
-              value: apiserver
+              valueFrom:
+                secretKeyRef:
+                  name: db
+                  key: password
           volumeMounts:
             - name: secret-vol
               mountPath: "/etc/app"
@@ -60,8 +63,5 @@ spec:
         - name: secret-vol
           secret:
             secretName: db
-            items:
-              - key: password
-                path: credentials
 
 status: {}

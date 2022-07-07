@@ -55,6 +55,3 @@ spec:
         - name: secret-vol
           secret:
             secretName: db
-            items:
-              - key: password
-                path: credentials
