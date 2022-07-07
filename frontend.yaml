@@ -16,7 +16,6 @@ spec:
         app: frontend
         release: v1
     spec:
-      replicas: 3
       # high availability (multi-az)
       topologySpreadConstraints:
         - maxSkew: 1

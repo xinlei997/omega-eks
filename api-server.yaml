@@ -45,7 +45,6 @@ spec:
         - image: jkplayground/smartbank-api-module:v1.0.0
           name: sba-apiserver
           resources: {}
-          replicas: 3
           # high availability (TCP probe)
           livenessProbe:
             httpGet:

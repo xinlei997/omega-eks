@@ -58,6 +58,9 @@ spec:
                   key: password
             - name: POSTGRES_DB
               value: app
+          ports:
+            - containerPort: 5432
+              name: db
           resources: {}
           # high availability (SELECT probe)
           livenessProbe:
