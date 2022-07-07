@@ -34,7 +34,7 @@ spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       containers:
-        - image: jkplayground/smartbank-api-module:observability-v1.0.0
+        - image: jkplayground/smartbank-api-module:v1.0.0
           name: sba-apiserver
           resources: {}
           env:
