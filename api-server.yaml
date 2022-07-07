@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: apiserver
+  name: apiserver
+spec:
+  ports:
+    - name: 80-8080
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: apiserver
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: apiserver
+  name: apiserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apiserver
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: apiserver
+    spec:
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      containers:
+        - image: jkplayground/smartbank-api-module:observability-v1.0.0
+          name: sba-apiserver
+          resources: {}
+          env:
+            - name: spring.datasource.url
+              value: jdbc:postgresql://postgres:5432/app
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: db
+                  key: username
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: db
+                  key: password
+            - name: spring.application.name
+              value: apiserver
+          volumeMounts:
+            - name: secret_vol
+              mountPath: "/etc/app"
+              readOnly: true
+      volumes:
+        - name: secret_vol
+          secret:
+            secretName: db
+            items:
+              - key: password
+                path: credentials
+
+status: {}
