@@ -16,6 +16,15 @@ spec:
         app: frontend
         release: v1
     spec:
+      replicas: 3
+      # high availability (multi-az)
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: frontend
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       containers:
@@ -25,6 +34,32 @@ spec:
           ports:
             - containerPort: 80
               name: nginx
+          # high availability (TCP probe)
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+              httpHeaders:
+            initialDelaySeconds: 0
+            periodSeconds: 2
+            successThreshold: 1
+            failureThreshold: 1
+          startupProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 0
+            periodSeconds: 15
+            successThreshold: 1
+            failureThreshold: 2
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
