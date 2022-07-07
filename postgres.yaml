@@ -15,7 +15,7 @@ spec:
   type: ClusterIP
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   labels:
     app: postgres
@@ -34,6 +34,10 @@ spec:
         - image: postgres
           name: postgres
           env:
+            # Persistent Volume Location
+            - name: PG_DATA
+              value: /data/pgdata
+            # refer to k8s secret key
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -51,7 +55,19 @@ spec:
             - name: secret-vol
               mountPath: "/etc/app"
               readOnly: true
+              # Mount Persistent Volume to container
+            - name: data
+              mountPath: /data
       volumes:
         - name: secret-vol
           secret:
             secretName: db
+  # Get Persistent Volume
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
