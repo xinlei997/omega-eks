@@ -48,11 +48,11 @@ spec:
               value: app
           resources: {}
           volumeMounts:
-            - name: secret_vol
+            - name: secret-vol
               mountPath: "/etc/app"
               readOnly: true
       volumes:
-        - name: secret_vol
+        - name: secret-vol
           secret:
             secretName: db
             items:

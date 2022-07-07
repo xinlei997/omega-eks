@@ -53,11 +53,11 @@ spec:
             - name: spring.application.name
               value: apiserver
           volumeMounts:
-            - name: secret_vol
+            - name: secret-vol
               mountPath: "/etc/app"
               readOnly: true
       volumes:
-        - name: secret_vol
+        - name: secret-vol
           secret:
             secretName: db
             items:
